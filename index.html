@@ -1100,19 +1100,19 @@
       <div class="contact-info">
         <div class="contact-item">
           <div class="contact-item-icon">📍</div>
-          <span>123 Fruit Grove, Kandy, Sri Lanka</span>
+          <span>98/A andimulla, katana, negombo, srilanka</span>
         </div>
         <div class="contact-item">
           <div class="contact-item-icon">📞</div>
-          <span>+94 77 123 4567</span>
+          <span>+94 710 149 744</span>
         </div>
         <div class="contact-item">
           <div class="contact-item-icon">✉️</div>
-          <span>hello@sundried.lk</span>
+          <span>vimukthiarosha123@gmail.com</span>
         </div>
         <div class="contact-item">
           <div class="contact-item-icon">🕐</div>
-          <span>Mon–Sat, 8am–6pm</span>
+          <span>Mon–Sat, 24 hrs</span>
         </div>
       </div>
     </div>
@@ -1371,6 +1371,30 @@ function submitInquiry() {
     showToast('⚠️ Please fill in required fields');
     return;
   }
+
+  const data = {
+    name: fname + ' ' + document.getElementById('lname').value.trim(),
+    email: email,
+    phone: document.getElementById('phone').value.trim(),
+    inquiry_type: document.getElementById('inquiryType').value,
+    message: message,
+  };
+
+  fetch('https://formspree.io/f/mgonnpoq', {  // 👈 paste your endpoint here
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  .then(res => {
+    if (res.ok) {
+      document.getElementById('inquiryFormWrapper').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    } else {
+      showToast('❌ Failed to send. Please try again.');
+    }
+  })
+  .catch(() => showToast('❌ Network error. Please try again.'));
+}
   document.getElementById('inquiryFormWrapper').style.display = 'none';
   document.getElementById('formSuccess').classList.add('show');
 }
